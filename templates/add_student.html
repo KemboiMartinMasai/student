@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% block title %}
+Add Students' Information
+{% endblock title %}
+{% block head %}
+<!-- Hero Section -->
+<section id="hero" class="hero section d-flex dark-background align-items-center justify-content-center" style="min-height: 100vh;">
+  <img src="static/assets/img/hero-bg.jpg" alt="" data-aos="fade-in">
+    <div class="container mt-2">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                {% for message in messages %}
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>{{ message }}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endfor %}
+
+                <div class="text-center" data-aos="fade-up" data-aos-delay="100">
+                    <h2>Add Students' Details</h2>
+                    <div class="container mt-2 mb-4">
+                        <div class="row">
+                        <div class="col-md-6">
+                          <form id="main-contact-form" name="contact-form" method="post" action="/add_student" enctype="multipart/form-data">{% csrf_token %}
+
+                            <div class="form-group ">
+                                <input type="number" name="adm_number" class="form-control mt-2" placeholder="Enter Admission Number" required>
+                            </div>
+                            
+                            <div class="form-group ">
+                                <input type="text" name="first_name" class="form-control mt-2" placeholder="Enter First Name" pattern="[A-Za-z ]+">
+                            </div>
+                            
+                            <div class="form-group ">
+                                <input type="text" name="last_name" class="form-control mt-2" placeholder="Enter Last Name" pattern="[A-Za-z ]+">
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control mt-2" id="Gender" name="gender" required>
+                                    <option selected>-Select Gender-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;▼</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                              </div>
+                           
+                            <div class="form-group ">
+                                <input type="number" name="phone_number" class="form-control mt-2" placeholder="Enter Mobile Number" required>
+                            </div>
+                            
+                            <div class="form-group ">
+                                    <input type="email" name="email" class="form-control mt-2" placeholder="Enter Email" required>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="date" class="text-warning">Date of birth</label>
+                                <input type="date" name="date_of_birth" class="form-control mt-2" id="date" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="date" class="text-warning">Enrollment Date</label>
+                                <input type="date" name="enrollment_date" class="form-control mt-2" id="date" required>
+                            </div>                                   
+                   
+                          <label for="picture" class="text-warning">Profile Picture</label>
+                          <div class="form-group ">
+                            <input type="file" name="profile_picture" class="form-control mt-2" id="picture" >
+                          </div>                        
+                                <div class="d-grid gap-2">
+                                    <button type="submit" class="btn btn-warning mt-2">Add Student</button>
+                                </div>
+                            </form>
+                      
+                        </div>
+                        <div class="col-md-3"></div>
+                        </div>
+                      </div>
+                    <!-- <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit">Add Student</button>
+                    </form>     -->
+            </div>
+          </div>
+        </div>
+    </div>
+</section>
+{% endblock head %}

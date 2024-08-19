@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block title %}
+Registration
+{% endblock title %}
+
+{% block head %}
+<!-- Hero Section -->
+<section id="hero" class="hero section d-flex dark-background align-items-center justify-content-center" style="min-height: 100vh;">
+  <img src="static/assets/img/hero-bg.jpg" alt="" data-aos="fade-in">
+    <div class="container mt-2">
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                {% for message in messages %}
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>{{ message }}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endfor %}
+
+                <div class="text-center" data-aos="fade-up" data-aos-delay="100">
+                    <h2>Sign Up Here</h2>
+                
+                <form id="main-contact-form" name="contact-form" method="post" action="{% url 'signup' %}">
+                    {% csrf_token %}
+                    <!-- Username -->
+                    <div class="form-group mt-3">
+                        <input type="text" name="username" class="form-control" placeholder="Enter Username" pattern="[A-Za-z ]+" required>
+                    </div>
+                    <!-- Email -->
+                    <div class="form-group mt-3">
+                        <input type="email" name="email" class="form-control" placeholder="Enter your email" required>
+                    </div>
+                    <!-- Phone Number -->
+                    <div class="form-group mt-3">
+                        <input type="number" name="phone_number" class="form-control" placeholder="Enter your Phone Number" required>
+                    </div>
+                    <!-- Password 1 -->
+                    <div class="form-group mt-3">
+                        <input type="password" name="password1" class="form-control" placeholder="Enter your password" required>
+                    </div>
+                    <!-- Password 2 -->
+                    <div class="form-group mt-3">
+                        <input type="password" name="password2" class="form-control" placeholder="Confirm your password" required>
+                    </div>
+                    <!-- Login Link -->
+                    <div class="form-group mt-3 text-center">
+                        <label for="description" class="text-info">Already have an account? <a href="/handlelogin">Login</a></label>
+                    </div>
+                    <!-- Submit Button -->
+                    <div class="d-grid gap-2 mt-3">
+                        <button type="submit" class="btn btn-warning">Register Now</button>
+                    </div>
+                </form>
+            </div>
+          </div>
+        </div>
+    </div>
+</section>
+{% endblock head %}
