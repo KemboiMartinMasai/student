@@ -97,16 +97,6 @@ def change_password(request):
         form = PasswordChangeForm(user=request.user)
     return render(request, 'change_password.html', {'form': form})
 
-def add_student(request):
-    if request.method == 'POST':
-        form = StudentForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('students_list')  # Redirect to a list of students or another page
-    else:
-        form = StudentForm()
-    return render(request, 'add_student.html', {'form': form})
-
 
 def add_student(request):
     error = ""
@@ -128,25 +118,25 @@ def add_student(request):
         try:
             q = Student.objects.create(adm_number=a,first_name=f, last_name=l, gender=g, date_of_birth=d, enrollment_date=ed, email=e,phone_number=p,  profile_picture=pp)
             messages.info(request, "Student added successfully")
-            return redirect('/student_list')
+            return redirect('student_list')
         except IntegrityError:
             # Handle primary key violation (e.g., duplicate primary key)
             error = "Student with the same Number key already exists."       
-    return render(request, 'add_student.html', {'error': error})
+    return render(request, 'adminlte/pages/add_student.html', {'error': error})
 
 def student_list(request):
     if not request.user.is_staff:
         messages.warning(request, "Please, For Staff only!")
         return redirect('handlelogin')
     students = Student.objects.all()
-    return render(request,'student_list.html', {'students': students})
+    return render(request,'adminlte/pages/student_list.html', {'students': students})
 
 def Delete_Student(request,pid):
     equipment = Student.objects.get(id=pid)
     equipment.delete()
     return redirect('/student_list')
 
-# def View_Student(request):
+def View_Student(request):
     if not request.user.is_staff:
         messages.warning(request,"Please, For Staff only!")
         return redirect('handlelogin')
