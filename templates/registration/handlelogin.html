@@ -1,0 +1,50 @@
+{% extends 'landing_page/base.html' %}
+{% block title %}
+Registration
+{% endblock title %}
+
+{% block head %}
+<!-- Hero Section -->
+<section id="hero" class="hero section d-flex dark-background align-items-center justify-content-center" style="min-height: 100vh;">
+  <img src="static/assets/img/hero-bg.jpg" alt="" data-aos="fade-in">
+    <div class="container mt-2">
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                {% for message in messages %}
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>{{ message }}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endfor %}
+
+                <div class="text-center" data-aos="fade-up" data-aos-delay="100">
+                    <h2>Login Here</h2>
+                
+                    <form id="main-contact-form" name="contact-form" method="post" action="/handlelogin">{% csrf_token %}
+                        <!-- user name starts here -->
+                        <div class="form-group">
+                            <input type="text" name="username" class="form-control mt-2" placeholder="Enter your username"
+                                required>
+                        </div>
+                        <!-- user name ends here -->
+                        <!-- password starts here -->
+                        <div class="form-group">
+                            <input type="password" name="password" class="form-control mt-2" placeholder="Enter your Password" required>
+                        </div>
+                         <!-- password ends here -->
+                        <div class="form-group">
+                            <label for="description" class="text-info">Don't have an account?</label><a href="/signup"><u>Register Now!</u> </a><br>
+                            <label for="description" class="text-info">Forgot password?</label><a href="{% url 'password_reset' %}"><u>Click Here!</u></a>
+                            
+                        </div><br>
+                         <!-- submit button starts -->
+                        <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-warning">Login</button>
+                        </div>
+                        <!-- submit button ends -->
+            </div>
+          </div>
+        </div>
+    </div>
+</section>
+{% endblock head %}

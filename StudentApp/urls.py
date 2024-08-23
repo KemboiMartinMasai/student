@@ -14,10 +14,9 @@ urlpatterns = [
     path('logout', views.logout_page, name="logout_page"),
     path('add_student', views.add_student, name="add_student"),
     path('student_list', views.student_list, name="student_list"),
-    path('delete_student(?p<int:pid>)', views.Delete_Student, name='delete_student'),
-    # path('view_student',views.View_Student,name='view_Student'),
-    path('viewOneStudent(<int:adm_number>)', views.viewOneStudent, name='viewOneStudent'),
-    path('update_student(?p<int:adm_number>)',views.update_student, name="update_Student"),
+    path('delete_student/<int:adm_number>/', views.Delete_Student, name='delete_student'),
+    path('viewOneStudent/<int:adm_number>/', views.viewOneStudent, name='viewOneStudent'),
+    path('update_student/<int:adm_number>/',views.update_student, name="update_student"),
     #dashboard urls
     path('dashboard/', views.dashboard, name='dashboard'),
     
@@ -27,4 +26,4 @@ urlpatterns = [
     path('password-reset/confirm/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('password-reset/complete/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
 
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

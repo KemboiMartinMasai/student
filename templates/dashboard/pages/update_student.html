@@ -1,0 +1,65 @@
+{% extends "dashboard/layouts/base.html" %}
+{% block title %}Update Student{% endblock title %}
+
+{% block content %}
+
+<div class="container ">
+    <h2 class="text-center bg-primary">Update Student Information</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="adm_number">Admission Number</label>
+            <input type="text" class="form-control" id="adm_number" name="adm_number" value="{{ form.adm_number.value }}" >
+        </div>
+
+        <div class="form-group">
+            <label for="profile_picture">Profile Picture</label>
+            <input type="file" class="form-control-file" id="profile_picture" name="profile_picture">
+            {% if student.profile_picture %}
+                <img src="{{ student.profile_picture.url }}" alt="Profile Picture" class="img-thumbnail mt-2" style="max-width: 150px;">
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="first_name">First Name</label>
+            <input type="text" class="form-control" id="first_name" name="first_name" value="{{ form.first_name.value }}">
+        </div>
+
+        <div class="form-group">
+            <label for="Last_name">Last Name</label>
+            <input type="text" class="form-control" id="first_name" name="last_name" value="{{ form.last_name.value }}">
+        </div>
+        <div class="form-group">
+            <label for="date" class="text-dark">Date of birth</label>
+            <input type="date" name="date_of_birth" class="form-control mt-2" id="date" value="{{ form.date_of_birth.value|date:'Y-m-d'}}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="phone_number">Phone Number</label>
+            <input type="text" class="form-control" id="phone_number" name="phone_number" value="{{ form.phone_number.value }}">
+        </div>
+
+        <div class="form-group">
+            <label for="Gender">Gender</label>
+            <select class="form-control mt-2" id="Gender" name="gender" value="{{ form.gender.value }}"required >
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+        </div>
+
+        <div class="form-group ">
+            <label for="email">Email</label>
+            <input type="email" name="email" class="form-control mt-2" value="{{ form.email.value }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="enrollment_date">Enrollment Date</label>
+            <input type="date" class="form-control" id="enrollment_date" name="enrollment_date" value="{{ form.enrollment_date.value|date:'Y-m-d' }}">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update</button>
+        <a href="{% url 'student_list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock content %}

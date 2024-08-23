@@ -23,4 +23,4 @@ class CreateUserForm(UserCreationForm):
 class StudentForm(forms.ModelForm):
     class Meta:
         model = Student
-        fields = ['adm_number','first_name', 'gender','last_name', 'email','phone_number', 'date_of_birth', 'profile_picture']
+        fields = ['adm_number','first_name', 'gender','last_name', 'email','phone_number', 'enrollment_date','date_of_birth', 'profile_picture']

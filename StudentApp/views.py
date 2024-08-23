@@ -35,8 +35,7 @@ from .forms import *
 from .forms import CreateUserForm
 # Create your views here.
 def Home(request):
-    return render(request,"index.html")
-
+    return render(request,"landing_page/index.html")
 
 def signup(request):
     if request.method == 'POST':
@@ -63,7 +62,7 @@ def signup(request):
                         messages.error(request, f'{field}: {error}')
     else:
         form = CreateUserForm()  # Use the custom form
-    return render(request,"signup.html")
+    return render(request,"registration/signup.html")
 
 def handlelogin(request):
     if request.method == 'POST':
@@ -76,7 +75,7 @@ def handlelogin(request):
             return redirect('dashboard')
         else:
             messages.info(request, "invalid username or password")
-    return render(request,"handlelogin.html")
+    return render(request,"registration/handlelogin.html")
 
 def logout_page(request):
     logout(request)
@@ -95,7 +94,7 @@ def change_password(request):
             messages.error(request, 'Please correct the errors below.')
     else:
         form = PasswordChangeForm(user=request.user)
-    return render(request, 'change_password.html', {'form': form})
+    return render(request, 'registration/change_password.html', {'form': form})
 
 
 def add_student(request):
@@ -114,7 +113,6 @@ def add_student(request):
         e = request.POST.get('email')
         p = request.POST.get('phone_number')
         pp = request.FILES.get('profile_picture') 
-           
         try:
             q = Student.objects.create(adm_number=a,first_name=f, last_name=l, gender=g, date_of_birth=d, enrollment_date=ed, email=e,phone_number=p,  profile_picture=pp)
             messages.info(request, "Student added successfully")
@@ -122,20 +120,19 @@ def add_student(request):
         except IntegrityError:
             # Handle primary key violation (e.g., duplicate primary key)
             error = "Student with the same Number key already exists."       
-    return render(request, 'adminlte/pages/add_student.html', {'error': error})
+    return render(request, 'dashboard/pages/add_student.html', {'error': error})
 
 def student_list(request):
     if not request.user.is_staff:
         messages.warning(request, "Please, For Staff only!")
         return redirect('handlelogin')
     students = Student.objects.all()
-    return render(request,'adminlte/pages/student_list.html', {'students': students})
+    return render(request,'dashboard/pages/student_list.html', {'students': students})
 
-def Delete_Student(request,pid):
-    equipment = Student.objects.get(id=pid)
-    equipment.delete()
-    return redirect('/student_list')
-
+def Delete_Student(request,adm_number):
+    student = get_object_or_404(Student, adm_number=adm_number)
+    student.delete()
+    return redirect('student_list')
 def View_Student(request):
     if not request.user.is_staff:
         messages.warning(request,"Please, For Staff only!")
@@ -155,30 +152,38 @@ def View_Student(request):
         'stud':stud
     }
     return render(request, 'view_student.html', context)
-def viewOneStudent(request, id):
-    Stud = Student.objects.get(id=id)
+
+def viewOneStudent(request, adm_number):
+    Stud = Student.objects.get(adm_number=adm_number)
     context = {
         "Stud": Stud
     }
     return render(request, 'viewOneStudent.html', context)
 
-def update_student(request,adm_number):
-    post = get_object_or_404(Student, adm_number=adm_number)
+
+def update_student(request, adm_number):
+    student = get_object_or_404(Student, adm_number=adm_number)
     if request.method == 'POST':
-        form = StudentForm(request.POST, instance=post)
+        form = StudentForm(request.POST, request.FILES, instance=student)
         if form.is_valid():
             form.save()
-            return redirect('/student_list',id=id)
+            messages.info(request, "Student updated successfully")
+            return redirect('student_list')
     else:
-        form = StudentForm(instance=post)
-    return render(request, 'update_student.html', {'form': form, 'post': post})
+        form = StudentForm(instance=student)
+    return render(request, 'dashboard/pages/update_student.html', {'form': form, 'student': student})
 
 def viewOneStudent(request, adm_number):
     st = get_object_or_404(Student, adm_number=adm_number)
     context = {
         "st": st
     }
-    return render(request, 'viewOneMember.html', context)
+    return render(request, 'dashboard/pages/viewOneStudent.html', context)
 
 def dashboard (request):
-    return render(request, 'adminlte/index.html')
+    student_count = Student.objects.count()
+    
+    context = {
+        'student_count': student_count,
+    }
+    return render(request, 'dashboard/index.html',context)

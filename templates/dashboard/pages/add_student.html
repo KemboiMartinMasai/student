@@ -1,0 +1,78 @@
+{% extends "dashboard/layouts/base.html" %}
+{% block title %}Add Students' Details{% endblock title %}
+
+{% block content %} 
+
+    <div class="container ">
+        <div class="card">
+<div class='card-header'>
+<div class="text-center" data-aos="fade-up" data-aos-delay="100">
+    <h2 class="text-center text-white bg-primary py-2 rounded">Add Students' Details</h2>
+</div>
+</div>
+<div class='card-body'>
+
+        <div class="row">
+        <div class="col-md-6">
+          <form id="main-contact-form" name="contact-form" method="post" action="/add_student" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="form-group ">
+                <label for="adm_number" class="text-dark">Admission Number</label>
+                <input type="number" name="adm_number" class="form-control mt-2" placeholder="Enter Admission Number" required>
+            </div>
+            
+            <div class="form-group ">
+                <label for="first_name" class="text-dark">First Name</label>
+                <input type="text" name="first_name" class="form-control mt-2" placeholder="Enter First Name" pattern="[A-Za-z ]+">
+            </div>
+            
+            <div class="form-group ">
+                <label for="last_name" class="text-dark">Last Name</label>
+                <input type="text" name="last_name" class="form-control mt-2" placeholder="Enter Last Name" pattern="[A-Za-z ]+">
+            </div>
+            <div class="form-group">
+                <label for="Gender" class="text-dark">Gender</label> 
+                <select class="form-control mt-2" id="Gender" name="gender" required>                   
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+              </div>
+           
+            <div class="form-group ">
+                <label for="phone_number" class="text-dark">Phone Number</label>
+                <input type="number" name="phone_number" class="form-control mt-2" placeholder="Enter Mobile Number" required>
+            </div>           
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="date" class="text-dark">Date of birth</label>
+                <input type="date" name="date_of_birth" class="form-control mt-2" id="date" required>
+            </div>
+            <div class="form-group">
+                <label for="date" class="text-dark">Enrollment Date</label>
+                <input type="date" name="enrollment_date" class="form-control mt-2" id="date" required>
+            </div>                                   
+   
+          <label for="picture" class="text-dark">Profile Picture</label>
+          <div class="form-group ">
+            <input type="file" name="profile_picture" class="form-control mt-2" id="picture" >
+          </div>                        
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-warning mt-2">Add Student</button>
+                </div>
+            </form>
+      
+        </div>
+        <div class="col-md-3"></div>
+        </div>
+      </div>
+</div>
+</div>
+</div>
+
+
+        </div>
+
+</div>{% endblock content %}

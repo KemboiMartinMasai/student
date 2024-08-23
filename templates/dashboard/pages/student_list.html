@@ -1,0 +1,53 @@
+{% extends "dashboard/layouts/base.html" %}
+{% block title %}Students list{% endblock title %}
+
+{% block content %} 
+<div class="container md-4" data-aos="fade-up" data-aos-delay="100">
+    <h2 class="text-center text-white bg-primary py-2 rounded">Students Information</h2>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover table-bordered align-middle">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col" class="text-center">#</th>
+                    <th scope="col" class="text-center">Profile Picture</th>
+                    <th scope="col">Admission Number</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Phone Number</th>
+                    <th scope="col">Enrollment Date</th>
+                    <th scope="col" class="text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                <tr>
+                    <td class="text-center">{{ forloop.counter }}</td>
+                    <td class="text-center">
+                        {% if student.profile_picture %}
+                            <img src="{{ student.profile_picture.url }}" alt="Profile Picture" class="img-thumbnail rounded-circle" style="width: 80px; height: 80px;">
+                        {% else %}
+                            <span class="badge bg-secondary">No Picture</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ student.adm_number }}</td>
+                    <td>{{ student.first_name }}</td>
+                    <td>{{ student.phone_number }}</td>
+                    <td>{{ student.enrollment_date }}</td>
+                    <td class="text-center">
+                        <a href="{% url 'viewOneStudent' student.adm_number %}" class="btn btn-outline-primary btn-sm" title="View">
+                            <i class="fa fa-eye"></i>
+                        </a>
+                        <a href="{% url 'update_student' student.adm_number %}" class="btn btn-outline-success btn-sm mx-1" title="Edit">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                        <a href="{% url 'delete_student' student.adm_number %}" class="btn btn-outline-danger btn-sm" title="Delete" onclick="return confirm('Are you sure you want to delete this student?');">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock content %}

@@ -19,12 +19,12 @@ class Profile(models.Model):
         instance.profile.save()
 
 class Student(models.Model):
-    adm_number= models.PositiveIntegerField(unique=True,null=True, blank=True)
+    adm_number= models.PositiveIntegerField(unique=True,primary_key=True)
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     gender=models.CharField(max_length=15,null=True,blank=True)
     date_of_birth = models.DateField()
-    enrollment_date = models.DateField(auto_now_add=True)
+    enrollment_date = models.DateField()
     email = models.EmailField(unique=True)
     phone_number = models.CharField(max_length=15, blank=True, null=True)
     profile_picture = models.ImageField(upload_to='profile_pics/', blank=True, null=True)
